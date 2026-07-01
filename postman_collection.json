@@ -1,0 +1,95 @@
+{
+  "info": {
+    "name": "Teacher Session Booking API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:3000"
+    }
+  ],
+  "item": [
+    {
+      "name": "1. Create Teacher",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "url": "{{baseUrl}}/teachers",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"fullName\": \"John Doe\",\n  \"email\": \"john@example.com\",\n  \"specialization\": \"Mathematics\",\n  \"experience\": 5\n}"
+        }
+      }
+    },
+    {
+      "name": "2. Create Session",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "url": "{{baseUrl}}/sessions",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"teacherId\": \"<teacher_id_here>\",\n  \"startTime\": \"2024-12-01T10:00:00.000Z\",\n  \"endTime\": \"2024-12-01T11:00:00.000Z\"\n}"
+        }
+      }
+    },
+    {
+      "name": "3. Get Available Sessions",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "{{baseUrl}}/sessions/available?dateTimestamp=1733040000000",
+          "host": ["{{baseUrl}}"],
+          "path": ["sessions", "available"],
+          "query": [
+            {
+              "key": "dateTimestamp",
+              "value": "1733040000000",
+              "description": "Unix timestamp in ms for the target date (e.g. 2024-12-01)"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "4. Create User",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "url": "{{baseUrl}}/users",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"fullName\": \"Jane Smith\",\n  \"email\": \"jane@example.com\",\n  \"phone\": \"9876543210\"\n}"
+        }
+      }
+    },
+    {
+      "name": "5. Book Session",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "url": "{{baseUrl}}/sessions/<session_id_here>/book",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"userId\": \"<user_id_here>\"\n}"
+        }
+      }
+    },
+    {
+      "name": "6. Complete Session",
+      "request": {
+        "method": "PATCH",
+        "header": [],
+        "url": "{{baseUrl}}/sessions/<session_id_here>/complete"
+      }
+    },
+    {
+      "name": "7. Get User Session History",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/users/<user_id_here>/sessions"
+      }
+    }
+  ]
+}
